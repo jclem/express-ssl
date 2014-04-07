@@ -1,6 +1,6 @@
 {
   "name": "express-ssl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Enforce SSL for Express apps",
   "main": "index.js",
   "scripts": {

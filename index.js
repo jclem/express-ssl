@@ -8,7 +8,7 @@ module.exports = function(useProxy, enable) {
   return middleware;
 
   function middleware(req, res, next) {
-    if (!enable) next();
+    if (!enable) return next();
 
     var isSecure = req.secure;
 
