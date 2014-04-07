@@ -1,0 +1,19 @@
+{
+  "name": "express-ssl",
+  "version": "1.0.0",
+  "description": "Enforce SSL for Express apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jclem/express-nginx-ssl"
+  },
+  "author": "Jonathan Clem",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jclem/express-nginx-ssl/issues"
+  },
+  "homepage": "https://github.com/jclem/express-nginx-ssl"
+}
