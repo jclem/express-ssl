@@ -2,7 +2,7 @@
 
 express-ssl enforces SSL for Express apps. By default, it will not trust proxies
 (i.e. by the `x-forwarded-for` header), and it will only be enabled when
-`process.env.NODE_ENV` is true.
+`process.env.NODE_ENV === 'production'` is true.
 
 ## Use
 
