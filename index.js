@@ -1,18 +1,25 @@
 'use strict';
 
-module.exports = function(useProxy, enable) {
-  if (typeof enable === 'undefined') {
-    enable = process.env.NODE_ENV === 'production';
+module.exports = function(enabled, options) {
+  options = options || {};
+
+  if (typeof enabled === 'object') {
+    options = enabled;
+    enabled = undefined;
+  }
+
+  if (enabled === undefined) {
+    enabled = process.env.NODE_ENV === 'production';
   }
 
   return middleware;
 
   function middleware(req, res, next) {
-    if (!enable) return next();
+    if (!enabled) return next();
 
     var isSecure = req.secure;
 
-    if (!isSecure && useProxy) {
+    if (!isSecure && options.trustProxy) {
       isSecure = req.headers['x-forwarded-proto'] === 'https';
     }
 
