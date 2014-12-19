@@ -1,20 +1,20 @@
 'use strict';
 
-module.exports = function(enabled, options) {
+module.exports = function ssl(options) {
   options = options || {};
+  var enabled = false;
 
-  if (typeof enabled === 'object') {
-    options = enabled;
-    enabled = undefined;
+  if (process.env.NODE_ENV === 'production') {
+    enabled = true;
   }
 
-  if (enabled === undefined) {
-    enabled = process.env.NODE_ENV === 'production';
+  if (options.disabled === true) {
+    enabled = false;
   }
 
-  return middleware;
+  return sslMiddleware;
 
-  function middleware(req, res, next) {
+  function sslMiddleware(req, res, next) {
     if (!enabled) return next();
 
     var isSecure = req.secure;
@@ -24,13 +24,12 @@ module.exports = function(enabled, options) {
     }
 
     if (isSecure) {
-      next();
-    } else {
-      if (req.method === 'GET') {
-        res.redirect(301, 'https://' + req.headers.host + req.originalUrl);
-      } else {
-        res.end(403, 'Please use HTTPS when communicating with this server');
-      }
+      return next();
+    } else if (options.disallow) {
+      return options.disallow(req, res);
     }
+
+    res.status(403)
+      .end('Please use HTTPS when communicating with this server.');
   }
 };

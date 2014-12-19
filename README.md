@@ -1,22 +1,30 @@
 # express-ssl
 
-express-ssl enforces SSL for Express apps. By default, it will not trust proxies
-(i.e. by the `x-forwarded-for` header), and it will only be enabled when
-`process.env.NODE_ENV === 'production'` is true.
+express-ssl enforces SSL for Express apps.
 
 ## Use
 
+Simply require and use the function exported by this module:
+
 ```javascript
 var ssl = require('express-ssl');
-var isProduction = process.env.NODE_ENV === 'production';
-app.use(ssl(isProduction, { trustProxy: true }));
+var app = require('express')();
+app.use(ssl());
 ```
 
-`isProduction` tells express-ssl to be enabled. If there is no argument passed,
-it defaults to the value of `process.env.NODE_ENV === 'production'`.
+The function requires an optional object of options:
 
-`trustProxy` option tells express-ssl to trust the `x-forwarded-proto` header
-from a proxy server (for example, a Heroku app, which is served by Nginx).
+- `disabled`: (default `false`) If `true`, this middleware will allow all
+requests through.
+- `trustProxy`: (default `false`) If `true`, trust the `x-forwarded-proto`
+header. If it is "https", requests are allowed through.
+- `disallow`: A function called with the request and response so that the user
+can handle rejecting non-SSL requests themselves.
+
+By default, this middleware will only run when `process.env.NODE_ENV` is set to
+"production". Unless a `disallow` function is supplied it will respond with the
+status code 403 and the body "Please use HTTPS when communicating with this
+server."
 
 ## Thanks, Heroku
 

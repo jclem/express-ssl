@@ -1,4 +1,4 @@
 {
-  "globalstrict": true,
-  "node": true
+  "node": true,
+  "unused": true
 }
