@@ -30,6 +30,7 @@ module.exports = function ssl(options) {
     }
 
     res.status(403)
+      .type('text/plain')
       .send('Please use HTTPS when communicating with this server.')
       .end();
   }
